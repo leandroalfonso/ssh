@@ -1,0 +1,17 @@
+
+@app.route('/index', methods= ['POST' , 'GET'])
+
+def comando(user, senha):
+     comando = 'echo "' + user + ':' + senha + '" | chpasswd'
+            
+     address = '20.197.195.6'
+     username = 'root'
+     password = '171716'
+            
+     ssh = paramiko.SSHClient()
+     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+     ssh.connect(hostname=address, username=username, password=password)
+     stdin, stdout, stderr = ssh.exec_command(comando)
+     stdin.close()
+     for line in stdout.readlines():
+        print(line.split('\n'))     
